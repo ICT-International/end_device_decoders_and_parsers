@@ -7,7 +7,8 @@
 */
 
 // Structure Type Define, 'nested' or 'flat'
-var TYPE = 'nested';
+var TYPE = 'nested'; //Use nested for Eratos
+//var Type = 'flat'; //Use flat for Meshed. Note: decoded data contains no Unit of Measure. 
 
 /*Class Buffer
 	Purpose: A psuedo buffer class for accessing packet data,
@@ -262,4 +263,5 @@ function primaryDecoder(buf,p){
 	}
 
 	return arr;
+
 }
