@@ -12,7 +12,9 @@
 	* Removed array push of payload version, charger fault and charger state by commenting out.
 	* Added if/else statement to CS506 Frequency input code so that when there is no sensor present it does not parse a zero/0: var frequency = +(buf.readUInt32BE(byte=byte+2));.
 	* Updated Port10, Port100 and unknown response sections to remove  product-id, batchnumber and raw-payload. //arr.push(["raw-payload", 0, buf.slice(0, buf.length), "unknown"]);
-
+	* Removed reference to //Analog Eq, equations should be performed in the database/dashboard platform.
+	* Removed reference to //Digital Eq, equations should be performed in the database/dashboard platform.	
+*/
 // Structure Type Define, 'nested' or 'flat'
 var TYPE = 'nested'; //Use nested for Eratos
 //var Type = 'flat'; //Use flat for Meshed. Note: decoded data contains no Unit of Measure. 
@@ -180,9 +182,6 @@ function primaryDecoder(buf,p){
 			arr.push(["voltage-adc", 2, voltage2, src, "uV"]);
 			arr.push(["voltage-adc", 3, voltage2, src, "uV"]);
 			arr.push(["voltage-adc", 4, voltage2, src, "uV"]);
-			
-			//Analog Eq
-			//
 		}
 		//Digital Packet
 		else if(header == 0x40){
@@ -196,9 +195,6 @@ function primaryDecoder(buf,p){
 			//arr.push(["digital-count", 3, digital3, src]); //Uncomment line 1st when 3rd digital pulse counter input is needed.
 			arr.push(["digital-count", 2, digital2, src]);
 			arr.push(["digital-count", 1, digital1, src]);
-			
-			//Digital Eq
-			//
 		}
 		//SDI Packet
 		else if(header & 0x80){
@@ -272,4 +268,5 @@ function primaryDecoder(buf,p){
 	return arr;
 
 }
+
 
