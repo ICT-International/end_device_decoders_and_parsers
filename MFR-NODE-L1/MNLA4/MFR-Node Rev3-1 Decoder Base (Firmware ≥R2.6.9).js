@@ -6,6 +6,13 @@
 	NOTE: For Eratos Connnections, comment out line 66: "if(e_length>5) par['address']=e[5];"
 */
 
+//Change Log:
+/* 
+2026/01/28: 
+	* Removed array push of payload version, charger fault and charger state by commenting out.
+	* Added if/else statement to CS506 Frequency input code so that when there is no sensor present it does not parse a zero/0: var frequency = +(buf.readUInt32BE(byte=byte+2));.
+	* Updated Port10, Port100 and unknown response sections to remove  product-id, batchnumber and raw-payload. //arr.push(["raw-payload", 0, buf.slice(0, buf.length), "unknown"]);
+
 // Structure Type Define, 'nested' or 'flat'
 var TYPE = 'nested'; //Use nested for Eratos
 //var Type = 'flat'; //Use flat for Meshed. Note: decoded data contains no Unit of Measure. 
@@ -133,15 +140,15 @@ function primaryDecoder(buf,p){
 
 	//Data Packet Recieved
 	if(p === 1){
+		// Test Payload Bytes: 1010000170F40FB04E7200000000
 		var src = "main";
 		var charge_fault = buf.readUInt8(byte);
 		var header = buf.readUInt8(byte=byte+1);
 		byte = 2;
-		
 		arr.push(['packet-type', 0, "DATA_PACKET", src]);
-		arr.push(["payload-version", 0, +((charge_fault & 0xf0) >> 4), src]);
-		arr.push(["charging-state", 0, +(charge_fault & 1), src]);
-		arr.push(["fault", 0, +((charge_fault & 2) >> 1), src]);
+		//arr.push(["payload-version", 0, +((charge_fault & 0xf0) >> 4), src]);
+		//arr.push(["charging-state", 0, +(charge_fault & 1), src]);
+		//arr.push(["fault", 0, +((charge_fault & 2) >> 1), src]);
 		arr.push(["header", 0, +((((header / 16) >> 0) * 10) + (header % 16)), src]);
 		
 		if(buf.length < 3){
@@ -154,12 +161,11 @@ function primaryDecoder(buf,p){
 			arr.push(["uptime", 0, +(buf.readUInt32BE(byte)), src, "s"]);
 			arr.push(["battery-voltage", 0, +((buf.readUInt16BE(byte = byte+4)/1000).toFixed(3)), src, "V"]);
 			arr.push(["solar-voltage", 0, +((buf.readUInt16BE(byte = byte+2)/1000).toFixed(3)), src, "V"]);
-			
 			var frequency = +(buf.readUInt32BE(byte=byte+2));
+			if(frequency > 1){
 			arr.push(["frequency", 0, frequency, src, "ns/pulse"]);
-			
-			//Freq Eq
-			//
+			}
+			else {} // decode nothing, because there is no CS506 Sensor attached assuming zero/0 ns/pulse
 		}
 		//Analog Packet
 		else if(header == 0x20){
@@ -201,8 +207,9 @@ function primaryDecoder(buf,p){
 			var com = +(header & 0x0f);
 			arr.push(["command", 0, com, src]);
 			src = "sdi_" + com.toString();
-			/*0-9 represents the 10 programming slots for SDI-12 onboard the device
-			Adjustment of SDI address in segement should match the physical real address of the sensor.
+			/*
+			0-9 represents the 10 programming slots for SDI-12 onboard the device.
+			Adjustment of SDI address in segement must match the physical real address of the sensor.
 			*/
 			//SDI 0
 			if(com === 0){
@@ -249,8 +256,8 @@ function primaryDecoder(buf,p){
 		//Device Info Packet Recieved
 		var src = "device_info";
 		arr.push(["packet-type", 0, "DEVICE_INFO", "main"]);
-		arr.push(["product-id", 0, buf.readUInt32BE(byte), src]);
-		arr.push(["batch-number", 0, buf.readUInt32BE(byte=byte+4), src]);
+		var productid = (["product-id", 0, buf.readUInt32BE(byte), src]);
+		var batchnumber = (["batch-number", 0, buf.readUInt32BE(byte=byte+4), src]);
 		arr.push(["software-version", 0, buf.readUInt32BE(byte=byte+4), src]);
 	} else if(p === 100){
 		//Downlink Response Packet Recieved
@@ -259,9 +266,10 @@ function primaryDecoder(buf,p){
 	} else{
 		// Unknown Response Recieved
 		arr.push(["packet-type", 0, "UNKNOWN_RESPONSE", "main"]);
-		arr.push(["raw-payload", 0, buf.slice(0, buf.length), "unknown"]);
+		//arr.push(["raw-payload", 0, buf.slice(0, buf.length), "unknown"]);
 	}
 
 	return arr;
 
 }
+
