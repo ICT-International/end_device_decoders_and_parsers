@@ -2,7 +2,6 @@
 	Includes Base Diagnostic, Analog, Digital and SDI Section
 	Suitable for MNLA3 & MNLA4 & MNLA5 800-900Mhz Global Nodes 
 	& MNLB3 running 2.6.9 inclusive and newer firmware with Signed ADC readings.
-	
 	NOTE: For Eratos Connnections, comment out line 66: "if(e_length>5) par['address']=e[5];"
 */
 
@@ -268,6 +267,7 @@ function primaryDecoder(buf,p){
 	}
 	return arr;
 }
+
 
 
 
