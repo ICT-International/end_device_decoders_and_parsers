@@ -264,9 +264,5 @@ function primaryDecoder(buf,p){
 		arr.push(["packet-type", 0, "UNKNOWN_RESPONSE", "main"]);
 		//arr.push(["raw-payload", 0, buf.slice(0, buf.length), "unknown"]);
 	}
-
 	return arr;
-
 }
-
-
