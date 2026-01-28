@@ -8,7 +8,8 @@
 
 //Change Log:
 /* 
-20260128: 
+20260128: R3-1
+Toby Partridge and Sarbajeet Mandal ICT International
 * Removed array push of payload version, charger fault, and charger state by commenting out.
 * Added if/else statement to CS506 Frequency input code so that when there is no sensor present it does not parse a zero/0: var frequency = +(buf.readUInt32BE(byte=byte+2));.
 * Updated Port10, Port100 and unknown response sections to remove product-id, batchnumber and raw-payload. //arr.push(["raw-payload", 0, buf.slice(0, buf.length), "unknown"]);
@@ -267,5 +268,6 @@ function primaryDecoder(buf,p){
 	}
 	return arr;
 }
+
 
 
