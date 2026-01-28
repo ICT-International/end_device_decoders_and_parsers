@@ -12,8 +12,8 @@
 	* Removed array push of payload version, charger fault and charger state by commenting out.
 	* Added if/else statement to CS506 Frequency input code so that when there is no sensor present it does not parse a zero/0: var frequency = +(buf.readUInt32BE(byte=byte+2));.
 	* Updated Port10, Port100 and unknown response sections to remove  product-id, batchnumber and raw-payload. //arr.push(["raw-payload", 0, buf.slice(0, buf.length), "unknown"]);
-	* Removed reference to //Analog Eq, equations should be performed in the database/dashboard platform.
-	* Removed reference to //Digital Eq, equations should be performed in the database/dashboard platform.	
+	* Removed reference to //Analog Eq, equations must run after at the database/dashboard platform.
+	* Removed reference to //Digital Eq, equations must run after at the database/dashboard platform.
 */
 // Structure Type Define, 'nested' or 'flat'
 var TYPE = 'nested'; //Use nested for Eratos
@@ -266,3 +266,4 @@ function primaryDecoder(buf,p){
 	}
 	return arr;
 }
+
