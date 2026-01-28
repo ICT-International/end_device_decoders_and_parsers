@@ -1,11 +1,26 @@
-/* ICT S-NODE LoRa Base Decoder for SNLA2, SNLA3, SNLA4 and SNLA5 models running firmware 2.4.2 and above.
+/* ICT S-NODE LoRa Decoder Base
+	Suitable for SNLA2, SNLA3, SNLA4 and SNLA5 models running firmware 2.4.2 and above.
 	SNLA = 900-930Mhz LoRaWan & 865-870Mhz LoRaWan
 	Includes Base Diagnostic and SDI Section
-	R1-0 GNSS Updated to be represented as Double Precision Float instead of Boolean function. 1 = True, 0 = False
-	R2-0 Introduced var steps in GNSS posistioning to allow skipping of array for products such as SNLA2 and SNLA4 that do not contain GNSS hardware.
-	R2-1 Introduced 30/Oct/2024 and Validated 05/Nov/2024:
-	* Introduces automatic parsing of gps posistioning or omission to reduce wasted data for payloads that contain false GNSS positioning coordinates.
-	R2-3 Added all lines for sdi12 slots (0-9) in decoded segment.
+*/
+
+//Change Log:
+/*
+20241030 R1-0
+Toby Partridge ICT International
+* GNSS Updated to be represented as Double Precision Float instead of Boolean function. 1 = True, 0 = False
+
+20241030 R2-0 
+* Introduced var steps in GNSS posistioning to allow skipping of array for products such as 
+SNLA2 and SNLA4 that do not contain GNSS hardware.
+
+20241105: R2-1
+* Introduces automatic parsing of gps posistioning or omission 
+to reduce wasted data for payloads that contain false GNSS positioning coordinates.
+
+20260114: R2-3
+* Added all lines for sdi12 slots (0-9) in decoded segment.
+
 */
 
 // Structure Type Define, 'nested' or 'flat'
@@ -228,4 +243,5 @@ function primaryDecoder(buf,p){
 	}
 
 	return arr;
+
 }
