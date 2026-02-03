@@ -75,7 +75,7 @@ function buildNested(a){
 		var e_length = e.length;
 		if(e_length>3&&exc.indexOf(e[3])<0) par['source']=e[3];
 		if(e_length>4) par['unit']=e[4];
-		if(e_length>5) par['address']=e[5];		//Comment this segment out for Eratos Senaps Integration.
+		if(e_length>5) par['address']=e[5];
 		ret.push(par);
 	} return ret;}
 
@@ -267,6 +267,7 @@ function primaryDecoder(buf,p){
 	}
 	return arr;
 }
+
 
 
 
