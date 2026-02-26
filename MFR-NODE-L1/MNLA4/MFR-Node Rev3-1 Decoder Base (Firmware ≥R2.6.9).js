@@ -14,6 +14,10 @@ Toby Partridge and Sarbajeet Mandal ICT International
 * Updated Port10, Port100 and unknown response sections to remove product-id, batchnumber and raw-payload. //arr.push(["raw-payload", 0, buf.slice(0, buf.length), "unknown"]);
 * Removed reference to //Analog Eq, equations must run after at the database/dashboard platform.
 * Removed reference to //Digital Eq, equations must run after at the database/dashboard platform.
+
+20260226: R3-2
+Toby Partridge
+* Added additional filtering to the CS506 input if-statement, so that large n/s pulses from an empty input are ignored, 26000 = 50% fuel moisture, larger numbers than this stop the frequency input being parsed.
 */
 
 // Structure Type Define, 'nested' or 'flat'
@@ -165,7 +169,7 @@ function primaryDecoder(buf,p){
 			arr.push(["battery-voltage", 0, +((buf.readUInt16BE(byte = byte+4)/1000).toFixed(3)), src, "V"]);
 			arr.push(["solar-voltage", 0, +((buf.readUInt16BE(byte = byte+2)/1000).toFixed(3)), src, "V"]);
 			var frequency = +(buf.readUInt32BE(byte=byte+2));
-			if(frequency > 1){
+			if(frequency > 1 && frequency < 26000) {
 			arr.push(["frequency", 0, frequency, src, "ns/pulse"]);
 			}
 			else {} // decode nothing, because there is no CS506 Sensor attached assuming zero/0 ns/pulse
@@ -267,6 +271,7 @@ function primaryDecoder(buf,p){
 	}
 	return arr;
 }
+
 
 
 
