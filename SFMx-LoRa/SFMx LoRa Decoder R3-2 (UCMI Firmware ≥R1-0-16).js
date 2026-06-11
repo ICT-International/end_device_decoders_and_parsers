@@ -134,9 +134,9 @@ function primaryDecoder(buf,p){
 	if (p == 1){
 		var src = "main";
 		arr.push(["packet-type", 0, "DATA_PACKET", src]);
-		arr.push(["uncorrected-outer", 0, +(buf.readFloatLE(byte).toFixed(3)), src, "cm/hr"]); // HRM uncorrected-outer is the Heat Velocity(Uncorrected, cm/hr)
-		arr.push(["uncorrected-inner", 0, +(buf.readFloatLE(byte=byte+4).toFixed(3)), src, "cm/hr"]); // HRM uncorrected-inner is the Heat Velocity(Uncorrected, cm/hr)
-		arr.push(["battery-voltage", 0, +((buf.readUInt16LE(byte=byte+4)/100).toFixed(2)), src, "V"]); // battery voltage in Volts.
+		arr.push(["uncorrected-outer", 0, +(buf.readFloatLE(byte).toFixed(3)), src, "cm/hr"]); 			// uncorrected-outer is the Heat pulse Velocity Vh (Uncorrected, cm/hr)
+		arr.push(["uncorrected-inner", 0, +(buf.readFloatLE(byte=byte+4).toFixed(3)), src, "cm/hr"]); 	// uncorrected-inner is the Heat pulse Velocity Vh (Uncorrected, cm/hr)
+		arr.push(["battery-voltage", 0, +((buf.readUInt16LE(byte=byte+4)/100).toFixed(2)), src, "V"]); 	// battery voltage in Volts.
 	} else if(p == 10){
 		var src = "device_info";
 		arr.push(["packet-type", 0,"DEVICE_INFO","main"]);
