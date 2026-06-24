@@ -19,7 +19,8 @@ R2-0
 * Heading Change to dT2t-SDI Integration and Decoder Segment.
 * File name change and revision number added.
 * Changed parsed labels to include -upper and -lower in the name to reflect the phy location of the sensing elements.
-* Added application note regarding post-processing of air-temperature-upper-dt if actual temperature is required.
+* Added an application note specifying that air-temperature-upper-dt requires post-processing when an actual temperature value is required.
+* Fixed spelling.
 */
 
 
@@ -34,6 +35,6 @@ R2-0
 			arr.push(["air-temperature-lower", 0, +(buf.readFloatBE(byte=byte+4).toFixed(3)), src, "C", addr]);
 			/* 
 			Note: air-temperature-upper-dt is the difference compared to air-temperature-lower, the user may require~
-			post-processing to achieve a actual temperature.
+			post-processing to achieve an actual temperature.
 			*/
 ''''
